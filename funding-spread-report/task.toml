@@ -1,0 +1,20 @@
+version = "1.0"
+
+[metadata]
+author_name = "Barrington Popo"
+author_github = "barringtonpopo"
+difficulty = "medium"
+category = "data-processing"
+tags = ["data-wrangling", "csv", "json", "finance"]
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 600.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory = "2G"
+storage = "10G"
