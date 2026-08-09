@@ -22,7 +22,7 @@ The layout follows current Harbor conventions rather than the older Terminal-Ben
 
 The instruction specifies every correct end state, including the empty-rate rule, because an agent cannot infer a spec decision, only follow one. The task carries two independent implementations of that spec: a reference implementation in `tools/compute_expected.py` that derives the test expectations, and the oracle in `solution/solve.sh`, written separately. The verifier proves they agree, which is cheap insurance against the task author misreading his own spec.
 
-The input data is committed, not generated inside the image, and `tools/gen_data.py` regenerates it byte for byte, gzip header pinned, so the environment cannot drift. The generator also refuses any rate whose graded value lands near a .05 rounding boundary, so float behaviour can never flip a verdict. A hygiene check confirms the Dockerfile references neither tests nor solution, mirroring the benchmark's own CI. And every artefact carries a canary string, the convention that lets dataset builders exclude evaluation material from training corpora.
+The input data is committed, not generated inside the image, and `tools/gen_data.py` regenerates its content byte for byte, so the environment cannot drift. The verifier compares decompressed content rather than raw gzip bytes, because identical data can compress differently under different zlib builds, which is exactly what this repo's first CI run caught. The generator also refuses any rate whose graded value lands near a .05 rounding boundary, so float behaviour can never flip a verdict. A hygiene check confirms the Dockerfile references neither tests nor solution, mirroring the benchmark's own CI. And every artefact carries a canary string, the convention that lets dataset builders exclude evaluation material from training corpora.
 
 ## Verification
 
@@ -30,7 +30,7 @@ The input data is committed, not generated inside the image, and `tools/gen_data
 python3 verify.py
 ```
 
-Seventeen checks across four families: the Harbor structure is present, the hygiene rules hold, the data regenerates identically, and the fail-then-pass loop works in a fresh directory, tests failing before the oracle runs and passing after. CI runs the same script on every push, so the badge means the task still discriminates.
+Eighteen checks across four families: the Harbor structure is present, the hygiene rules hold, the data regenerates identically, and the fail-then-pass loop works in a fresh directory, tests failing before the oracle runs and passing after. CI runs the same script on every push, so the badge means the task still discriminates.
 
 ## Running it with Docker
 
