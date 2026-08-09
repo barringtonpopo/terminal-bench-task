@@ -112,7 +112,7 @@ def main():
             rows.append([f"{asset}-USD", str(EPOCH_MS[hour]), value])
     rows = rows[2::3] + rows[0::3] + rows[1::3]
     with (OUT / "dydx_funding.csv").open("w", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["ticker", "timestamp_ms", "rate"])
         writer.writerows(rows)
 

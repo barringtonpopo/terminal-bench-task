@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Task data is an artefact, never to be rewritten by line-ending normalisation.
+funding-spread-report/environment/data/* -text
